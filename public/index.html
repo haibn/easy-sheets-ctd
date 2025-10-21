@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spreadsheets List</title>
+  </head>
+
+  <body>
+    <h1>Spreadsheets List</h1>
+    <hr />
+    <p id="message"></p>
+    <hr />
+
+    <!-- log-in and register button -->
+    <div id="logon-register" style="display: none">
+      <button type="button" id="logon">logon</button>
+      <button type="button" id="register">register</button>
+    </div>
+
+    <!-- log in page -->
+    <div id="logon-div" style="display: none">
+      <form>
+        <div>
+          <label for="email">email:</label>
+          <input type="email" id="email" />
+        </div>
+        <div>
+          <label for="password">password:</label>
+          <input type="password" id="password" />
+        </div>
+        <button type="button" id="logon-button">logon</button>
+        <button type="button" id="logon-cancel">cancel</button>
+      </form>
+    </div>
+
+    <!-- register page  -->
+    <div id="register-div" style="display: none">
+      <form>
+        <div>
+          <label for="name">name:</label>
+          <input type="text" id="name" />
+        </div>
+        <div>
+          <label for="email1">email:</label>
+          <input type="email" id="email1" />
+        </div>
+        <div>
+          <label for="password1">password:</label>
+          <input type="password" id="password1" />
+        </div>
+        <div>
+          <label for="password2">verify password:</label>
+          <input type="password" id="password2" />
+        </div>
+        <button type="button" id="register-button">register</button>
+        <button type="button" id="register-cancel">cancel</button>
+      </form>
+    </div>
+
+    <!-- Spreadsheets page -->
+    <div id="spreadsheets" style="display: none">
+      <p id="spreadsheets-message"></p>
+      <table id="spreadsheets-table">
+        <tr id="spreadsheets-table-header">
+          <th>Google Spreadsheet ID</th>
+          <th>Name of Spreadsheet</th>
+          <th>Mappings</th>
+          <th colspan="2"></th>
+        </tr>
+      </table>
+      <button type="button" id="add-spreadsheet">add spreadsheet</button>
+      <button type="button" id="logoff">log off</button>
+    </div>
+
+    <!-- edit spreadsheet page -->
+    <div id="edit-spreadsheet" style="display: none">
+      <form>
+        <div>
+          <label for="google-spreadsheet-id">google-spreadsheet-id:</label>
+          <input type="text" id="google-spreadsheet-id" />
+        </div>
+        <div>
+          <label for="spreadsheet-name">spreadsheet name:</label>
+          <input type="text" id="spreadsheet-name" />
+        </div>
+        <div>
+          <label for="mappings">mappings:</label>
+          <select id="mappings">
+            <option value="pending">pending</option>
+            <option value="interview">interview</option>
+            <option value="declined">declined</option>
+          </select>
+        </div>
+        <button type="button" id="adding-spreadsheet">add</button>
+        <button type="button" id="edit-cancel">cancel</button>
+      </form>
+    </div>
+    <script src="./index.js" type="module"></script>
+  </body>
+</html>
