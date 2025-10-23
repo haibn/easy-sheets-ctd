@@ -5,6 +5,7 @@ const {
   UnauthenticatedError,
   NotFoundError,
 } = require("../errors");
+const { readSheet, writeSheet } = require("../googleSheetsService");
 
 const getAllSpreadsheets = async (req, res) => {
   const spreadsheets = await Spreadsheet.find({
@@ -100,10 +101,70 @@ const deleteSpreadsheet = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "The entry was deleted." });
 };
 
+// GET spreadsheet data from Google Sheets
+const getSpreadsheetData = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: spreadsheetId },
+  } = req;
+
+  // 1. Find spreadsheet document in DB
+  const spreadsheet = await Spreadsheet.findOne({
+    _id: spreadsheetId,
+    createdBy: userId,
+  });
+
+  if (!spreadsheet) {
+    throw new NotFoundError(`Spreadsheet with id ${spreadsheetId} not found`);
+  }
+
+  // 2. Read data from the actual Google Sheet
+  const data = await readSheet(
+    spreadsheet.googleSpreadsheetId,
+    "Sheet1!A1:E10"
+  );
+
+  res.status(StatusCodes.OK).json({
+    message: "Spreadsheet data fetched successfully",
+    data,
+  });
+};
+
+// POST data to Google Sheets (example)
+const updateSpreadsheetData = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: spreadsheetId },
+    body: { range, values },
+  } = req;
+
+  const spreadsheet = await Spreadsheet.findOne({
+    _id: spreadsheetId,
+    createdBy: userId,
+  });
+
+  if (!spreadsheet) {
+    throw new NotFoundError(`Spreadsheet with id ${spreadsheetId} not found`);
+  }
+
+  const result = await writeSheet(
+    spreadsheet.googleSpreadsheetId,
+    range,
+    values
+  );
+
+  res.status(StatusCodes.OK).json({
+    message: "Spreadsheet data updated successfully",
+    result,
+  });
+};
+
 module.exports = {
   getAllSpreadsheets,
   getSpreadsheet,
   addSpreadsheet,
   updateSpreadsheet,
   deleteSpreadsheet,
+  getSpreadsheetData,
+  updateSpreadsheetData,
 };
